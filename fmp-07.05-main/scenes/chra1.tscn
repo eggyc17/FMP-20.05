@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://28h0furtujdl"]
+
+[ext_resource type="PackedScene" uid="uid://cgoign86obdka" path="res://scenes/player.tscn" id="1_jl8xp"]
+[ext_resource type="Texture2D" uid="uid://bdw2j5kejiegc" path="res://scenes/Dark/texture_01.png" id="1_xcq3t"]
+[ext_resource type="PackedScene" uid="uid://bdllbapoetlwf" path="res://models/idle-animation-robot.glb" id="3_461ny"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rt3lw"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_i0ual"]
+sky_material = SubResource("ProceduralSkyMaterial_rt3lw")
+
+[sub_resource type="Environment" id="Environment_qq08q"]
+background_mode = 2
+sky = SubResource("Sky_i0ual")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5luw"]
+albedo_texture = ExtResource("1_xcq3t")
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_qq08q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="map" type="Node3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, -20.0252, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0327148, 0)
+material_override = SubResource("StandardMaterial3D_r5luw")
+lod_bias = 0.001
+use_collision = true
+size = Vector3(50, 0.5, 50)
+
+[node name="Player" parent="." instance=ExtResource("1_jl8xp")]
+transform = Transform3D(142.783, 0, 0, 0, 142.783, 0, 0, 0, 142.783, 0, 159.665, 0)
+sens_horizontal = 0.2
+
+[node name="idle-animation-robot" parent="." instance=ExtResource("3_461ny")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 712.97, 8.2463, -1165.01)
